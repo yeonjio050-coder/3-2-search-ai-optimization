@@ -1,8 +1,24 @@
+import Seo from './components/Seo'
 import './App.css'
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'VAN 뉴스',
+  url: 'https://van.example.com/',
+  description: 'VAN 뉴스는 신설 언론사의 검색·AI 노출 최적화 프로젝트입니다.',
+  inLanguage: 'ko-KR',
+}
 
 function App() {
   return (
     <>
+      <Seo
+        title="신뢰할 수 있는 뉴스"
+        path="/"
+        jsonLd={jsonLd}
+      />
+
       <header className="site-header">
         <a className="logo" href="/">VAN</a>
         <nav aria-label="주요 메뉴">
@@ -22,6 +38,14 @@ function App() {
 
           <article>
             <h3>첫 번째 기사 제목</h3>
+            <img
+              src="/icons.svg"
+              alt="첫 번째 기사 대표 이미지"
+              width="320"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
             <p>
               기사 요약 내용이 들어가는 자리입니다. 검색엔진과 생성형 AI가
               문서 구조를 정확히 이해할 수 있도록 시맨틱 태그로 구성했습니다.
@@ -31,6 +55,14 @@ function App() {
 
           <article>
             <h3>두 번째 기사 제목</h3>
+            <img
+              src="/icons.svg"
+              alt="두 번째 기사 대표 이미지"
+              width="320"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
             <p>
               각 기사는 article 태그로 감싸 독립적인 콘텐츠 단위임을
               명시합니다.
