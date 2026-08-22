@@ -1,16 +1,36 @@
-# React + Vite
+# 3-2 검색·AI 노출 최적화
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+VAN AI혁신부 26-2 개발과제 중 **3-2 검색·AI 노출 최적화**의 SEO 컴포넌트 규격 레퍼런스 저장소입니다.
 
-Currently, two official plugins are available:
+본 저장소는 실제 서비스가 아니라, 2-3(VAN 공식 홈페이지)·2-4(MLI 한국지부)·2-5(언론사 미디어 플랫폼)에 내장될 SEO 규격을 정의하고 검증하기 위한 샘플 구현입니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 대응 요구사항
 
-## React Compiler
+| 요구사항 ID | 내용 | 상태 |
+| --- | --- | --- |
+| SEO-001 | 고유 제목·메타 설명 | 완료 |
+| SEO-003 | 구조화 데이터 (Organization) | 완료 |
+| SEO-004 | 정규 URL(canonical) | 완료 |
+| SEO-005 | 공유용 메타태그 | 완료 |
+| SEO-008 | robots 색인 차단 설정 | 완료 |
+| SEO-009 | 이미지 대체텍스트 규칙 | 완료 |
+| SEO-002 | 사이트맵 자동 생성 | 예정 |
+| SEO-006 | 검색도구 등록·사이트맵 제출 | 예정 |
+| SEO-007 | 색인 상태 확인 | 예정 |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 문서
 
-## Expanding the Oxlint configuration
+- [CSR 렌더링 점검 보고서](docs/csr-rendering-report.md)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 미해결 사항
+
+- 실제 도메인 미확정 — canonical·og:url에 임시값 사용 중
+- og:image 미설정 — 대표 이미지 확정 필요
+- 사이트 렌더링 방식 — CSR 구조에서는 본문이 크롤러에 노출되지 않아 구조화 데이터 인수 기준 충족 불가. 2-3·2-4·2-5 구축 시 SSR 또는 프리렌더링 적용 전제 필요
+
+## 개발
+
+```bash
+npm install
+npm run dev
+```

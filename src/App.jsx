@@ -1,120 +1,91 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import Seo from './components/Seo'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'VAN 뉴스',
+  url: 'https://van.example.com/',
+  description: 'VAN 뉴스는 신설 언론사의 검색·AI 노출 최적화 프로젝트입니다.',
+  inLanguage: 'ko-KR',
+}
 
+function App() {
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
+      <Seo
+        title="신뢰할 수 있는 뉴스"
+        path="/"
+        jsonLd={jsonLd}
+      />
+
+      <header className="site-header">
+        <a className="logo" href="/">VAN</a>
+        <nav aria-label="주요 메뉴">
+          <ul>
+            <li><a href="#news">뉴스</a></li>
+            <li><a href="#about">소개</a></li>
+            <li><a href="#contact">문의</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <h1>VAN 뉴스</h1>
+
+        <section id="news" aria-labelledby="news-heading">
+          <h2 id="news-heading">최신 기사</h2>
+
+          <article>
+            <h3>첫 번째 기사 제목</h3>
+            <img
+              src="/icons.svg"
+              alt="첫 번째 기사 대표 이미지"
+              width="320"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <p>
+              기사 요약 내용이 들어가는 자리입니다. 검색엔진과 생성형 AI가
+              문서 구조를 정확히 이해할 수 있도록 시맨틱 태그로 구성했습니다.
+            </p>
+            <a href="/news/1">기사 전문 읽기</a>
+          </article>
+
+          <article>
+            <h3>두 번째 기사 제목</h3>
+            <img
+              src="/icons.svg"
+              alt="두 번째 기사 대표 이미지"
+              width="320"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <p>
+              각 기사는 article 태그로 감싸 독립적인 콘텐츠 단위임을
+              명시합니다.
+            </p>
+            <a href="/news/2">기사 전문 읽기</a>
+          </article>
+        </section>
+
+        <section id="about" aria-labelledby="about-heading">
+          <h2 id="about-heading">VAN 소개</h2>
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            VAN은 신설 언론사의 검색·AI 노출 최적화를 담당하는 프로젝트입니다.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        </section>
+      </main>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      <footer id="contact">
+        <h2>문의</h2>
+        <address>
+          이메일: <a href="mailto:contact@van.example">contact@van.example</a>
+        </address>
+        <p><small>&copy; 2026 VAN. All rights reserved.</small></p>
+      </footer>
     </>
   )
 }
