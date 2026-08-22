@@ -1,16 +1,19 @@
 package com.van.seo.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * sitemap.xml 동적 생성
- * 3-2 검색·AI 노출 최적화 / SEO-002
+ * 3-2 검색·AI 노출 최적화 / SEO-002, 세부업무 BE-9(캐시)
  */
 @RestController
 public class SitemapController {
@@ -37,7 +40,7 @@ public class SitemapController {
     }
 
     @GetMapping(value = "/sitemap.xml", produces = MediaType.APPLICATION_XML_VALUE)
-    public String sitemap() {
+    public ResponseEntity<String> sitemap() {
         String today = LocalDate.now().toString();
 
         StringBuilder xml = new StringBuilder();
@@ -54,6 +57,10 @@ public class SitemapController {
         }
 
         xml.append("</urlset>\n");
-        return xml.toString();
+
+        // 기사 추가·삭제가 반영되어야 하므로 1시간으로 짧게 잡는다
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
+                .body(xml.toString());
     }
 }

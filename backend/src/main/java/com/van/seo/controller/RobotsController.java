@@ -1,13 +1,17 @@
 package com.van.seo.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * robots.txt 동적 서빙
- * 3-2 검색·AI 노출 최적화 / SEO-008
+ * 3-2 검색·AI 노출 최적화 / SEO-008, 세부업무 BE-9(캐시)
  */
 @RestController
 public class RobotsController {
@@ -19,16 +23,19 @@ public class RobotsController {
     private boolean allowIndexing;
 
     @GetMapping(value = "/robots.txt", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String robots() {
+    public ResponseEntity<String> robots() {
+
         if (!allowIndexing) {
-            return """
-                    # 색인 차단 환경
-                    User-agent: *
-                    Disallow: /
-                    """;
+            return ResponseEntity.ok()
+                    .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
+                    .body("""
+                            # 색인 차단 환경
+                            User-agent: *
+                            Disallow: /
+                            """);
         }
 
-        return """
+        String body = """
                 # VAN 뉴스 크롤러 접근 규칙
 
                 User-agent: *
@@ -59,5 +66,9 @@ public class RobotsController {
 
                 Sitemap: %s/sitemap.xml
                 """.formatted(siteUrl);
+
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.DAYS).cachePublic())
+                .body(body);
     }
 }
