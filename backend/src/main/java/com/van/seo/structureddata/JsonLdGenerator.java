@@ -74,7 +74,7 @@ public class JsonLdGenerator {
     public Map<String, Object> event(EventRequest req) {
         Map<String, Object> node = base("Event");
         node.put("name", req.name());
-        node.put("url", absoluteUrl(req.path()));
+        node.put("url", absoluteUrl(req.path(), req.siteUrl()));
 
         putIfPresent(node, "description", req.description());
 
@@ -146,11 +146,18 @@ public class JsonLdGenerator {
         return image;
     }
 
-    private String absoluteUrl(String path) {
+       private String absoluteUrl(String path) {
+        return absoluteUrl(path, null);
+    }
+
+    private String absoluteUrl(String path, String overrideSiteUrl) {
+        String base = (overrideSiteUrl != null && !overrideSiteUrl.isBlank())
+                ? overrideSiteUrl.replaceAll("/+$", "")
+                : siteUrl;
         if (path == null || path.isBlank()) {
-            return siteUrl + "/";
+            return base + "/";
         }
-        return path.startsWith("http") ? path : siteUrl + path;
+        return path.startsWith("http") ? path : base + path;
     }
 
     private void putIfPresent(Map<String, Object> node, String key, String value) {
