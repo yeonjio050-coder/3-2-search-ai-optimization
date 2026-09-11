@@ -33,13 +33,25 @@ public class JsonLdGenerator {
     @Value("${seo.org.logo-path}")
     private String orgLogoPath;
 
+    @Value("${seo.org.name-en}")
+    private String orgNameEn;
+
+    @Value("${seo.org.description-en}")
+    private String orgDescriptionEn;
+
     /** 단체 정보 */
     public Map<String, Object> organization() {
+        return organization("ko");
+    }
+
+    public Map<String, Object> organization(String language) {
+        boolean english = "en".equalsIgnoreCase(language);
+
         Map<String, Object> node = base("Organization");
-        node.put("name", orgName);
+        node.put("name", english ? orgNameEn : orgName);
         node.put("url", siteUrl + "/");
-        node.put("description", orgDescription);
-        node.put("inLanguage", "ko-KR");
+        node.put("description", english ? orgDescriptionEn : orgDescription);
+        node.put("inLanguage", english ? "en" : "ko-KR");
         node.put("logo", imageObject(orgLogoPath));
         return node;
     }

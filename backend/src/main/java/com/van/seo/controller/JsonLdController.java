@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -34,10 +35,11 @@ public class JsonLdController {
 
     /** 단체 정보 — 값이 고정이므로 캐시를 길게 잡는다 */
     @GetMapping(value = "/organization", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> organization() {
+    public ResponseEntity<Map<String, Object>> organization(
+            @RequestParam(defaultValue = "ko") String language) {
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.DAYS).cachePublic())
-                .body(generator.organization());
+                .body(generator.organization(language));
     }
 
     /** 기사 */
